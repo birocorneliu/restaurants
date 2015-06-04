@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from database_setup import Restaurant, MenuItem, session
+from lib.database_setup import Restaurant, MenuItem, session
 
 
 #Show all restaurants
@@ -23,9 +23,8 @@ def new_restaurant():
 def edit_restaurant(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
     if request.method == 'POST':
-        if request.form['name']:
-            restaurant.name = request.form['name']
-            return redirect(url_for('show_restaurants'))
+        restaurant.name = request.form['name']
+        return redirect(url_for('show_restaurants'))
     else:
         return render_template('edit_restaurant.html', restaurant=restaurant)
 
@@ -36,8 +35,7 @@ def delete_restaurant(restaurant_id):
     if request.method == 'POST':
         session.delete(restaurants)
         session.commit()
-        return redirect(url_for('show_restaurants',
-                                restaurant_id=restaurant_id))
+        return redirect(url_for('show_restaurants'))
     else:
         return render_template('delete_restaurant.html', restaurant=restaurants)
 

@@ -1,5 +1,5 @@
 from flask import jsonify
-from database_setup import Restaurant, MenuItem, session
+from lib.database_setup import Restaurant, MenuItem, session
 
 
 def api_restaurant_menu(restaurant_id):
